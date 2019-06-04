@@ -1,8 +1,0 @@
----
-- account: "some account name"
-  username: "user name"
-  key: "secret key"
-
-- account: "some account name2"
-  username: "user name2"
-  key: "secret key2"

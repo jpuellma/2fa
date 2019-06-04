@@ -1,26 +1,35 @@
 #!/usr/bin/env python
 
-import argparse
+from argparse import ArgumentParser
+from os.path import expanduser
 from pprint import pprint
-import yaml
+from pyotp import TOTP
+from yaml import safe_load
 
 
 def main():
-    parser = argparse.ArgumentParser()
+    parser = ArgumentParser()
     parser.add_argument("search_string",
                         nargs='?',
                         default='',
                         help="Optional search string.")
     args = parser.parse_args()
 
-    with open('totp.yaml') as f:
-        totp_data = yaml.safe_load(f)
+    homedir = expanduser("~")
 
-    # pprint(args)
-    # pprint(totp_data)
+    with open(homedir + '/.2fa.yml') as f:
+        totp_data = safe_load(f)
 
     for i in totp_data:
-        pprint(i['account'])
+        try:
+            account = i['account']
+            username = i['username']
+            key = i['key']
+            otp = TOTP(key)
+            print("%s %s\t(%s)" % (otp.now(), account, username))
+        except KeyError as e:
+            print("No such key found.")
+            pprint(e)
 
 
 if __name__ == '__main__':
