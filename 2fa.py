@@ -26,7 +26,7 @@ def main():
             username = i['username']
             key = i['key']
             otp = TOTP(key)
-            print("%s %s\t(%s)" % (otp.now(), account, username))
+            print(f"{account : <9}{otp.now() : <7}{username}")
         except KeyError as e:
             print("No such key found.")
             pprint(e)
