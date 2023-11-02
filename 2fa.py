@@ -31,9 +31,9 @@ def main():
             otp = TOTP(key)
             try:
                 if matchstring.lower() in account.lower() or matchstring.lower() in username.lower():
-                    print(f"{account : <9}{otp.now() : <7}{username}")
+                    print(f"{otp.now() : <7}{account : <9}{username}")
             except NameError:
-                print(f"{account : <9}{otp.now() : <7}{username}")
+                print(f"{otp.now() : <7}{account : <9}{username}")
             except Exception as e:
                 print("Error:")
                 pprint(e)
